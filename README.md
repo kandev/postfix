@@ -74,3 +74,47 @@ Initial creation of the certificate is manual.
 certbot certonly --agree-tos -n --standalone -d mail.example.com
 ```
 Daily cron job is running to automatically renew any expiring certificates.
+
+## Mail client configuration ##
+Some mail client apps try to autodiscover your mail server address and settings right after you fill your email address. More details can be found in *Tips* section below.
+
+The easiest ways is to create file named **config-v1.1.xml** with the following example content:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+
+<clientConfig version="1.1">
+  <emailProvider id="example.com">
+    <domain>example.com</domain>
+    <displayName>Example Corp Ltd.</displayName>
+    <displayShortName>Example</displayShortName>
+    <incomingServer type="imap">
+      <hostname>mail.example.com</hostname>
+      <port>143</port>
+      <socketType>STARTTLS</socketType>
+      <authentication>password-cleartext</authentication>
+      <username>%EMAILADDRESS%</username>
+    </incomingServer>
+    <outgoingServer type="smtp">
+      <hostname>mail.example.com</hostname>
+      <port>25</port>
+      <socketType>STARTTLS</socketType>
+      <authentication>password-cleartext</authentication>
+      <username>%EMAILADDRESS%</username>
+    </outgoingServer>
+  </emailProvider>
+</clientConfig>
+```
+Update your server name and domain, then upload this file to your web server where **example.com** web site is hosted, in the following path - **.well-known/autoconfig/mail/**.
+
+If for some reason the client application which you use can't find your server details, you should fill them manually.
+* SMTP port 25, STARTTLS, plain text password
+* IMAP port 143, STARTTLS, plain text password
+* Supposedly you have already created DNS A record for the mail server itself - **mail.example.com**
+* Don't worry about the *plain text*, the connection is secured by TLS.
+
+## Tips ##
+Here are some additional spices, which will make your mail service taste better :)
+* Create SPF record in your DNS zone - https://www.spfwizard.net/
+* Create DMARC record in your DNS zone - https://dmarcian.com/dmarc-record-wizard/
+* Mail server automatic detection best practices - https://dmarcian.com/dmarc-record-wizard/
+* Mail server diagnostics - https://mxtoolbox.com/diagnostic.aspx
