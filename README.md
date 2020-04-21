@@ -7,7 +7,7 @@ Assuming you have basic knowledge of *Docker Containers* and what they do. If no
 * IMAP with STARTTLS encryption
 * SMTP with STARTTLS encryption
 * Letsencrypt SSL certificate with autorenew
-* Blacklists for spam filtering
+* Blacklists and SPF checks for spam filtering
 
 ## Installation ##
 ### Build from source ###

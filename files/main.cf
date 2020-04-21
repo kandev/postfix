@@ -22,6 +22,7 @@ message_size_limit = 50000000
 recipient_delimiter = +
 inet_interfaces = all
 inet_protocols = all
+policyd-spf_time_limit = 3600
 
 virtual_mailbox_domains = /var/config/postfix/mailbox_domains
 virtual_alias_maps = hash:/var/config/postfix/alias_maps
@@ -62,6 +63,7 @@ smtpd_recipient_restrictions =
     reject_unknown_sender_domain,
     reject_unknown_recipient_domain,
     reject_unauth_destination,
+    check_policy_service unix:private/policyd-spf,
     reject_rbl_client zen.spamhaus.org,
     reject_rbl_client bl.spamcop.net,
     reject_rbl_client b.barracudacentral.org,

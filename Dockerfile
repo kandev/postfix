@@ -12,6 +12,7 @@ RUN \
     dovecot-imapd \
     dovecot-pop3d \
     dovecot-antispam \
+    postfix-policyd-spf-python \
     coreutils \
     bash \
     supervisor \
