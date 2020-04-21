@@ -35,7 +35,7 @@ default._domainkey 14400 IN TXT "v=DKIM1; k=rsa; p=MIGfMA0GCSqGS.....QAB"
 If you want to create new key. Please use the following commands.
 ```
 openssl genrsa -out /var/config/dkim_private.key 1024
-openssl rsa -in dkim_private.key -pubout | sed '1d;$d' | tr -d '\n' > /var/config/dkim_public.key
+openssl rsa -in /var/config/dkim_private.key -pubout | sed '1d;$d' | tr -d '\n' > /var/config/dkim_public.key
 ```
 ## Domains ##
 All accepted domains are filled in **/var/config/postfix/mailbox_domains**.
