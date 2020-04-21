@@ -16,7 +16,7 @@ cd postfix
 docker-compose build
 docker-compose up -d
 ```
-Свързването към контейнера става така:
+Connecting to container:
 ```
 docker exec -ti mail1 bash
 ```
