@@ -1,5 +1,5 @@
 # Simple and clean mail server in docker container #
-Assuming you have basic knowledge of *Docker Containers* and what they do. If not - please, go watch some online video presentation about that. Basically it's almost virtual machine, bot not so bloated and resource hungry.
+Assuming you have basic knowledge of *Docker Containers* and what they do. If not - please, go watch some online video presentation about that. Basically it's almost virtual machine, but not so bloated and resource hungry.
 
 ## Main features ##
 
