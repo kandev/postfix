@@ -7,6 +7,24 @@
 * SMTP with STARTTLS encryption
 * Letsencrypt SSL certificat with autorenew
 * Blacklists for spam filtering
+
+## Installation ##
+### Build from source ###
+```
+git clone https://github.com/kandev/postfix
+cd postfix
+docker-compose build
+docker-compose up -d
+```
+Свързването към контейнера става така:
+```
+docker exec -ti mail1 bash
+```
+### Get the latest image from Docker Hub ###
+```
+docker create -h mail1 --name mail1 -p 25:25 -p 80:80 -p 143:143 -v mail1_config:/var/config kandev/postfix:latest
+docker start mail1
+```
 ## DKIM Keys ##
 DKIM key is automatically generated on image creation. Both private and publik keys are stored at **/var/config** directory.
 Please use the content of **dkim_public.key** to create TXT records in all required DNS zones.
@@ -25,7 +43,7 @@ example.com ok
 example.net ok
 example.org ok
 ```
-Don't forget *postmap mailbox_domains*
+Don't forget to run **postmap mailbox_domains** after update.
 ## Creating user accounts ##
 ### Mailbox map ###
 All mailboxes should be listed in **/var/config/mailbox_maps**, using the following format:
@@ -33,7 +51,7 @@ All mailboxes should be listed in **/var/config/mailbox_maps**, using the follow
 ivan@example.com example.com/ivan/
 petar@example.org example.org/petar/
 ```
-Don't forget *postmap mailbox_maps*
+Don't forget to run **postmap mailbox_maps** after update.
 
 Specifyng SMTP address and mailbox directory where all the messages will be stored.
 ### User credentials ###
@@ -48,7 +66,8 @@ Aliases are created in **alias_maps**.
 admin@example.com ivan@example.com
 support@example.com ivan@example.com
 ```
-Don't forget *postmap alias_maps*
+Don't forget to run **postmap alias_maps** after update.
+
 ## SSL Certificate ##
 Initial creation of the certificate is manual.
 ```

@@ -1,0 +1,29 @@
+version: "3.7"
+
+services:
+  mail1:
+    build: .
+    image: kandev/postfix
+    container_name: mail1
+    restart: always
+    hostname: mail1
+    volumes:
+      - /volumes/mail1/domains:/var/mail/domains:rw
+      - /volumes/mail1/letsencrypt:/etc/letsencrypt:rw
+      - /etc/localtime:/etc/localtime:ro
+      - mail-config:/var/config
+    networks:
+      dmz:
+        ipv4_address: 172.20.0.3
+
+networks:
+  dmz:
+    name: dmz
+    ipam:
+      driver: bridge
+      config:
+        - subnet: 172.20.0.0/24
+
+volumes:
+  mail-config:
+    name: mail1
