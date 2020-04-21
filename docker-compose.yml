@@ -26,4 +26,4 @@ networks:
 
 volumes:
   mail-config:
-    name: mail1
+    name: mail1_config

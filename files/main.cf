@@ -23,9 +23,9 @@ recipient_delimiter = +
 inet_interfaces = all
 inet_protocols = all
 
-virtual_mailbox_domains = /etc/postfix/mailbox_domains
-virtual_alias_maps = hash:/etc/postfix/alias_maps
-virtual_mailbox_maps = hash:/etc/postfix/mailbox_maps
+virtual_mailbox_domains = /var/config/postfix/mailbox_domains
+virtual_alias_maps = hash:/var/config/postfix/alias_maps
+virtual_mailbox_maps = hash:/var/config/postfix/mailbox_maps
 virtual_mailbox_base = /var/mail/domains
 virtual_transport = virtual
 virtual_uid_maps = static:1000
