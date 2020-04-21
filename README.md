@@ -6,7 +6,7 @@ Assuming you have basic knowledge of *Docker Containers* and what they do. If no
 * OpenDKIM signing
 * IMAP with STARTTLS encryption
 * SMTP with STARTTLS encryption
-* Letsencrypt SSL certificat with autorenew
+* Letsencrypt SSL certificate with autorenew
 * Blacklists for spam filtering
 
 ## Installation ##
