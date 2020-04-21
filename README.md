@@ -22,7 +22,7 @@ docker exec -ti mail1 bash
 ```
 ### Get the latest image from Docker Hub ###
 ```
-docker create -h mail1 --name mail1 -p 25:25 -p 80:80 -p 143:143 -v mail1_config:/var/config kandev/postfix:latest
+docker create -h mail1 --name mail1 --network dmz --ip 172.20.0.3 -v mail1_config:/var/config kandev/postfix:latest
 docker start mail1
 ```
 ## DKIM Keys ##
