@@ -69,6 +69,17 @@ support@example.com ivan@example.com
 ```
 Don't forget to run **postmap alias_maps** after update.
 
+## Access control: blacklist, whitelist, archive ##
+Addresses are listed in **sender_access** file as follows.
+```
+promocia.info     REJECT You suck but yo mama sweet
+1.2.3.4           REJECT
+4.3.2.1           OK
+kiro@example.com  BCC gosho@corp.com
+```
+You can use full email addresses, domains, ip addresses of mail servers. Full list of actions can be seen [here](http://www.postfix.org/access.5.html).
+And of course - don't forget to run **postmap sender_access** after editing.
+
 ## SSL Certificate ##
 Initial creation of the certificate is manual.
 ```

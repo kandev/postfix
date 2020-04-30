@@ -41,7 +41,8 @@ COPY ./files/master.cf /var/config/postfix/
 COPY ./files/mailbox_domains /var/config/postfix/
 COPY ./files/mailbox_maps /var/config/postfix/
 COPY ./files/alias_maps /var/config/postfix/
-RUN /usr/sbin/postmap /var/config/postfix/mailbox_domains; /usr/sbin/postmap /var/config/postfix/mailbox_maps; /usr/sbin/postmap /var/config/postfix/alias_maps
+COPY ./files/sender_access /var/config/postfix/
+RUN /usr/sbin/postmap /var/config/postfix/mailbox_domains; /usr/sbin/postmap /var/config/postfix/mailbox_maps; /usr/sbin/postmap /var/config/postfix/alias_maps; /usr/sbin/postmap /var/config/postfix/sender_access
 
 # Generate OpenDKIM key
 RUN openssl genrsa -out /var/config/dkim_private.key 1024

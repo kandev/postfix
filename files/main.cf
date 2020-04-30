@@ -55,6 +55,7 @@ smtpd_relay_restrictions =
 smtpd_recipient_restrictions =
     permit_mynetworks,
     permit_sasl_authenticated,
+    check_sender_access hash:/var/config/postfix/sender_access,
     reject_non_fqdn_helo_hostname,
     reject_non_fqdn_sender,
 #    reject_unknown_reverse_client_hostname,
