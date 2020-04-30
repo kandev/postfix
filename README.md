@@ -88,9 +88,7 @@ certbot certonly --agree-tos -n --standalone -d mail.example.com
 Daily cron job is running to automatically renew any expiring certificates.
 
 ## Mail client configuration ##
-Some mail client apps try to autodiscover your mail server address and settings right after you fill your email address. More details can be found in *Tips* section below.
-
-The easiest ways is to create file named **config-v1.1.xml** with the following example content:
+To enable autodiscovery of server configuration parameters, create file named **config-v1.1.xml** with the following example content:
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 
@@ -116,7 +114,7 @@ The easiest ways is to create file named **config-v1.1.xml** with the following 
   </emailProvider>
 </clientConfig>
 ```
-Update your server name and domain, then upload this file to your web server where **example.com** web site is hosted, in the following path - **.well-known/autoconfig/mail/**.
+Update your server name and domain, then upload this file to your web server where **example.com** web site is hosted, in the following path - **/.well-known/autoconfig/mail/**.
 
 If for some reason the client application which you use can't find your server details, you should fill them manually.
 * SMTP port 25, STARTTLS, plain text password
