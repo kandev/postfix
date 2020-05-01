@@ -40,11 +40,11 @@ openssl rsa -in /var/config/dkim_private.key -pubout | sed '1d;$d' | tr -d '\n' 
 ## Domains ##
 All accepted domains are filled in **/var/config/postfix/mailbox_domains**.
 ```
-example.com ok
-example.net ok
-example.org ok
+example.com
+example.net
+example.org
 ```
-Don't forget to run **postmap mailbox_domains** after update.
+
 ## Creating user accounts ##
 ### Mailbox map ###
 All mailboxes should be listed in **/var/config/mailbox_maps**, using the following format:
@@ -55,12 +55,14 @@ petar@example.org example.org/petar/
 Don't forget to run **postmap mailbox_maps** after update.
 
 Specifyng SMTP address and mailbox directory where all the messages will be stored.
+
 ### User credentials ###
 Access credentials are stored in **/var/config/users**
 ```
 ivan@example.com:{CRAM-MD5}b1a3aca8da01c45eb94aa9e64d317d36785e7056b42t67e0ac1d6925ca1b11d7
 ```
 Password is generated using **doveadm pw**.
+
 ## Address aliases ##
 Aliases are created in **alias_maps**.
 ```
@@ -70,15 +72,26 @@ support@example.com ivan@example.com
 Don't forget to run **postmap alias_maps** after update.
 
 ## Access control: blacklist, whitelist, archive ##
-Addresses are listed in **sender_access** file as follows.
+Addresses are listed in **sender_access.pcre** file using regular expressions as follows.
 ```
-promocia.info     REJECT You suck but yo mama sweet
-1.2.3.4           REJECT
-4.3.2.1           OK
-kiro@example.com  BCC gosho@corp.com
+/^postmaster@/         OK
+/promocia\.info/       REJECT You suck but yo mama sweet
+/1\.2\.3\.4/           REJECT
+/4\.3\.2\.1/           OK
+/kiro@example\.com/    BCC gosho@corp.com
 ```
 You can use full email addresses, domains, ip addresses of mail servers. Full list of actions can be seen [here](http://www.postfix.org/access.5.html).
-And of course - don't forget to run **postmap sender_access** after editing.
+Some details about PCRE format can be found [here](https://qualysguard.qualys.com/qwebhelp/fo_portal/module_pc/policies/regular_expression_symbols.htm).
+It is good practice to keep the **postmaster** address allowed to be able to receive delivery complains.
+
+## Internal spoofing protection ##
+This means locking all authenticated users to send emails only as their own address.
+Permissions to another address can be given in **login_maps.pcre**.
+```
+/noreply@example.com/ forum@example.com
+/^(.*)$/    ${1}
+```
+This example allows authenticated user *forum@example.com* to send emails from address *noreply@example.com*.
 
 ## SSL Certificate ##
 Initial creation of the certificate is manual.

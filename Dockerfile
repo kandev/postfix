@@ -13,6 +13,7 @@ RUN \
     dovecot-pop3d \
     dovecot-antispam \
     postfix-policyd-spf-python \
+    postfix-pcre\
     coreutils \
     bash \
     supervisor \
@@ -41,8 +42,8 @@ COPY ./files/master.cf /var/config/postfix/
 COPY ./files/mailbox_domains /var/config/postfix/
 COPY ./files/mailbox_maps /var/config/postfix/
 COPY ./files/alias_maps /var/config/postfix/
-COPY ./files/sender_access /var/config/postfix/
-RUN /usr/sbin/postmap /var/config/postfix/mailbox_domains; /usr/sbin/postmap /var/config/postfix/mailbox_maps; /usr/sbin/postmap /var/config/postfix/alias_maps; /usr/sbin/postmap /var/config/postfix/sender_access
+COPY ./files/sender_access.pcre /var/config/postfix/
+RUN /usr/sbin/postmap /var/config/postfix/mailbox_domains; /usr/sbin/postmap /var/config/postfix/mailbox_maps; /usr/sbin/postmap /var/config/postfix/alias_maps
 
 # Generate OpenDKIM key
 RUN openssl genrsa -out /var/config/dkim_private.key 1024

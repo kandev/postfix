@@ -1,0 +1,2 @@
+/noreply@example.com/ forum@example.com
+/^(.*)$/    ${1}
