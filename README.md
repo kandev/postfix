@@ -91,7 +91,7 @@ Permissions to another address can be given in **login_maps.pcre**.
 /noreply@example.com/ forum@example.com
 /^(.*)$/    ${1}
 ```
-This example allows authenticated user *forum@example.com* to send emails from address *noreply@example.com*.
+This example allows authenticated user *forum@example.com* to send emails as *noreply@example.com*.
 
 ## SSL Certificate ##
 Initial creation of the certificate is manual.

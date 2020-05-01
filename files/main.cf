@@ -4,6 +4,14 @@ biff = no
 append_dot_mydomain = no
 readme_directory = no
 
+#While this is great for troubleshooting, it also allows others to make educated guesses if an account exists and deliver possibly spam. The VRFY command is not normally not needed for delivery between two mail servers
+disable_vrfy_command = yes
+
+#Servers that are not using this are typically not properly configured, or simply sending spam.
+smtpd_helo_required = yes
+
+smtp_tls_loglevel = 1
+
 smtpd_tls_cert_file = /etc/letsencrypt/live/mail.example.com/fullchain.pem
 smtpd_tls_key_file = /etc/letsencrypt/live/mail.example.com/privkey.pem
 smtpd_use_tls = yes
@@ -75,7 +83,7 @@ smtpd_recipient_restrictions =
     reject_rbl_client bl.spamcop.net,
     reject_rbl_client b.barracudacentral.org,
     reject_rbl_client cbl.abuseat.org,
-    reject_rbl_client escalations.dnsbl.sorbs.net,
+    reject_rbl_client dnsbl.sorbs.net,
     permit
 
 smtpd_data_restrictions =
