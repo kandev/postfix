@@ -11,6 +11,7 @@ services:
       - /volumes/mail1/domains:/var/mail/domains:rw
       - /volumes/mail1/letsencrypt:/etc/letsencrypt:rw
       - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
       - mail-config:/var/config
     networks:
       dmz:
