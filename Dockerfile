@@ -26,9 +26,8 @@ RUN \
     vim \
     mc
 
-RUN localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 ENV LANG en_US.utf8
-RUN unlink /etc/localtime
+RUN localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 && unlink /etc/localtime
 
 # Copy all default configuration files
 COPY ./files/supervisord.conf /etc/supervisor/
@@ -43,19 +42,14 @@ COPY ./files/master.cf /var/config/postfix/
 COPY ./files/mailbox_domains /var/config/postfix/
 COPY ./files/mailbox_maps /var/config/postfix/
 COPY ./files/alias_maps /var/config/postfix/
-COPY ./files/sender_access.pcre /var/config/postfix/
-RUN /usr/sbin/postmap /var/config/postfix/mailbox_domains; /usr/sbin/postmap /var/config/postfix/mailbox_maps; /usr/sbin/postmap /var/config/postfix/alias_maps
+COPY ./files/sender_access /var/config/postfix/
+RUN /usr/sbin/postmap /var/config/postfix/mailbox_domains; /usr/sbin/postmap /var/config/postfix/mailbox_maps; /usr/sbin/postmap /var/config/postfix/alias_maps; /usr/sbin/postmap /var/config/postfix/sender_access
 
-# Generate OpenDKIM key
-RUN openssl genrsa -out /var/config/dkim_private.key 1024
-
-# Extract public key
-RUN openssl rsa -in /var/config/dkim_private.key -pubout | sed '1d;$d' | tr -d '\n' > /var/config/dkim_public.key
+# Generate and extract OpenDKIM key
+RUN openssl genrsa -out /var/config/dkim_private.key 1024 && RUN openssl rsa -in /var/config/dkim_private.key -pubout | sed '1d;$d' | tr -d '\n' > /var/config/dkim_public.key
 
 # Prepare Postfix chrooted environment
-RUN mkdir -p /var/spool/postfix/etc/
-RUN cp -f /etc/resolv.conf /var/spool/postfix/etc/
-RUN cp -f /etc/services /var/spool/postfix/etc/
+RUN mkdir -p /var/spool/postfix/etc/ && cp -f /etc/resolv.conf /var/spool/postfix/etc/ && cp -f /etc/services /var/spool/postfix/etc/
 
 # Renew all available certificates
 RUN echo '0 3 * * * /sr/bin/certbot renew -n --standalone' | crontab
