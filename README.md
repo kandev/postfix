@@ -75,19 +75,17 @@ Don't forget to run **postmap alias_maps** after update.
 Addresses are listed in **sender_access** file.
 You should whitelist all backup mail servers, otherwise SPF will block all emails from them!
 ```
-postmaster@       OK
 promocia.info     REJECT You suck but yo mama sweet
 1.2.3.4           REJECT
 4.3.2.1           OK
 kiro@example.com  BCC gosho@corp.com
 ```
 You can use full email addresses, domains, ip addresses of mail servers. Full list of actions can be seen [here](http://www.postfix.org/access.5.html).
-It is good practice to keep the **postmaster** address allowed to be able to receive delivery complains.
+And of course - dont forget **postmap sender_access** after each update.
 
 ## Internal spoofing protection ##
 This means locking all authenticated users to send emails only as their own address.
 Permissions to another address can be given in **login_maps.pcre**.
-And of course - dont forget **postmap sender_access** after each update.
 ```
 /noreply@example.com/ forum@example.com
 /^(.*)$/    ${1}
